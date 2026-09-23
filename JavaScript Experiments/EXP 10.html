@@ -1,0 +1,172 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Student Details</h2>
+
+    <button onclick="loadStudents()">Load Student Data</button>
+
+    <table id="studentTable">
+        <tr>
+            <th>Name</th>
+            <th>PRN</th>
+            <th>Branch</th>
+            <th>Semester</th>
+            <th>CGPA</th>
+        </tr>
+    </table>
+
+    <script>
+
+        // JSON data
+        const jsonData = `[
+            {
+                "name": "Rahul Sharma",
+                "prn": "2024012345",
+                "branch": "CSE",
+                "semester": 5,
+                "cgpa": 8.2
+            },
+            {
+                "name": "Priya Patil",
+                "prn": "2024012346",
+                "branch": "CSE",
+                "semester": 5,
+                "cgpa": 8.7
+            },
+            {
+                "name": "Amit Joshi",
+                "prn": "2024012347",
+                "branch": "Data Science",
+                "semester": 5,
+                "cgpa": 7.9
+            },
+            {
+                "name": "Sneha Kulkarni",
+                "prn": "2024012348",
+                "branch": "CSE",
+                "semester": 5,
+                "cgpa": 9.1
+            },
+            {
+                "name": "Aditya Deshmukh",
+                "prn": "2024012349",
+                "branch": "AI & ML",
+                "semester": 5,
+                "cgpa": 8.5
+            },
+            {
+                "name": "Neha Verma",
+                "prn": "2024012350",
+                "branch": "Data Science",
+                "semester": 5,
+                "cgpa": 9.0
+            },
+            {
+                "name": "Rohan Mehta",
+                "prn": "2024012351",
+                "branch": "CSE",
+                "semester": 5,
+                "cgpa": 7.8
+            },
+            {
+                "name": "Ananya Singh",
+                "prn": "2024012352",
+                "branch": "AI & ML",
+                "semester": 5,
+                "cgpa": 8.9
+            },
+            {
+                "name": "Karan Gupta",
+                "prn": "2024012353",
+                "branch": "Data Science",
+                "semester": 5,
+                "cgpa": 8.0
+            },
+            {
+                "name": "Isha Nair",
+                "prn": "2024012354",
+                "branch": "CSE",
+                "semester": 5,
+                "cgpa": 9.3
+            }
+        ]`;
+
+        function loadStudents() {
+
+            // Convert JSON data into JavaScript object
+            const students = JSON.parse(jsonData);
+
+            const table = document.getElementById("studentTable");
+
+            students.forEach(function(student) {
+
+                // Create a new row
+                let row = table.insertRow();
+
+                // Add data to each cell
+                row.insertCell(0).innerHTML = student.name;
+                row.insertCell(1).innerHTML = student.prn;
+                row.insertCell(2).innerHTML = student.branch;
+                row.insertCell(3).innerHTML = student.semester;
+                row.insertCell(4).innerHTML = student.cgpa;
+
+            });
+        }
+
+    </script>
+
+</body>
+</html>
+
