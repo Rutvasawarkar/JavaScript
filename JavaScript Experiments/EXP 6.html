@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Validation & Text Analysis</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .results {
+            margin-top: 25px;
+        }
+
+        .section {
+            background-color: #f8f8f8;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #333;
+            border-radius: 5px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .result {
+            margin: 8px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #e5e5e5;
+            padding: 5px 8px;
+            margin: 3px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Email Validation, Data Extraction & Text Analysis</h1>
+
+    <label for="textInput">Enter your text:</label>
+
+    <textarea id="textInput">Hello, my name is Rutva Sawarkar.
+My email addresses are rutva@gmail.com and rutva123@yahoo.com.
+You can contact me at 9876543210.
+I am a B.Tech CSE student learning Python, Data Analysis and Machine Learning.
+Python is easy to learn and Python is very useful for data analysis.
+Regular expressions are useful for email validation and text processing.</textarea>
+
+    <button onclick="analyzeText()">Analyze Text</button>
+
+    <div class="results" id="results"></div>
+
+</div>
+
+
+<script>
+
+function analyzeText() {
+
+    // Get text entered by the user
+    let text = document.getElementById("textInput").value;
+
+    // --------------------------------------------------
+    // 1. EMAIL EXTRACTION AND VALIDATION
+    // --------------------------------------------------
+
+    let emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+
+    let emails = text.match(emailPattern) || [];
+
+    let emailHTML = "";
+
+    if (emails.length === 0) {
+        emailHTML = "No email addresses found.";
+    } else {
+        emails.forEach(function(email) {
+            emailHTML += `<div class="result">
+                ${email} → <strong>Valid</strong>
+            </div>`;
+        });
+    }
+
+
+    // --------------------------------------------------
+    // 2. PHONE NUMBER EXTRACTION
+    // --------------------------------------------------
+
+    let phonePattern = /\b\d{10}\b/g;
+
+    let phoneNumbers = text.match(phonePattern) || [];
+
+    let phoneHTML = "";
+
+    if (phoneNumbers.length === 0) {
+        phoneHTML = "No phone numbers found.";
+    } else {
+        phoneNumbers.forEach(function(phone) {
+            phoneHTML += `<div class="result">${phone}</div>`;
+        });
+    }
+
+
+    // --------------------------------------------------
+    // 3. TEXT CLEANING
+    // --------------------------------------------------
+
+    let cleanText = text.toLowerCase();
+
+    // Remove punctuation
+    cleanText = cleanText.replace(/[^\w\s]/g, "");
+
+    // Convert text into words
+    let words = cleanText.split(/\s+/).filter(word => word !== "");
+
+
+    // --------------------------------------------------
+    // 4. TEXT ANALYSIS
+    // --------------------------------------------------
+
+    let totalCharacters = text.length;
+
+    let totalWords = words.length;
+
+    let uniqueWords = new Set(words).size;
+
+
+    // --------------------------------------------------
+    // 5. WORD FREQUENCY
+    // --------------------------------------------------
+
+    let pythonCount = words.filter(word => word === "python").length;
+
+
+    // --------------------------------------------------
+    // 6. WORDS STARTING WITH P
+    // --------------------------------------------------
+
+    let pWords = words.filter(word => /^p\w*/.test(word));
+
+
+    // --------------------------------------------------
+    // 7. WORDS ENDING WITH ING
+    // --------------------------------------------------
+
+    let ingWords = words.filter(word => /\w+ing$/.test(word));
+
+
+    // --------------------------------------------------
+    // 8. WORDS LONGER THAN 6 CHARACTERS
+    // --------------------------------------------------
+
+    let longWords = words.filter(word => word.length > 6);
+
+
+    // --------------------------------------------------
+    // 9. STRING FUNCTIONS
+    // --------------------------------------------------
+
+    let uppercaseText = text.toUpperCase();
+
+    let lowercaseText = text.toLowerCase();
+
+    let startsWithHello = text.trim().startsWith("Hello");
+
+    let containsPython = text.includes("Python");
+
+    let pythonOccurrences = (text.match(/Python/g) || []).length;
+
+
+    // --------------------------------------------------
+    // DISPLAY RESULTS
+    // --------------------------------------------------
+
+    document.getElementById("results").innerHTML = `
+
+        <div class="section">
+            <h2>1. Email Validation</h2>
+            ${emailHTML}
+        </div>
+
+        <div class="section">
+            <h2>2. Phone Number Extraction</h2>
+            ${phoneHTML}
+        </div>
+
+        <div class="section">
+            <h2>3. Text Analysis</h2>
+            <div class="result">
+                Total Characters: <strong>${totalCharacters}</strong>
+            </div>
+
+            <div class="result">
+                Total Words: <strong>${totalWords}</strong>
+            </div>
+
+            <div class="result">
+                Unique Words: <strong>${uniqueWords}</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Word Frequency</h2>
+            <div class="result">
+                Frequency of "python":
+                <strong>${pythonCount}</strong>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Words Starting With 'P'</h2>
+            ${pWords.map(word => `<span class="tag">${word}</span>`).join("")}
+        </div>
+
+        <div class="section">
+            <h2>6. Words Ending With 'ING'</h2>
+            ${ingWords.map(word => `<span class="tag">${word}</span>`).join("")}
+        </div>
+
+        <div class="section">
+            <h2>7. Words Longer Than 6 Characters</h2>
+            ${longWords.map(word => `<span class="tag">${word}</span>`).join("")}
+        </div>
+
+        <div class="section">
+            <h2>8. String Functions</h2>
+
+            <div class="result">
+                <strong>Uppercase Text:</strong>
+                <p>${uppercaseText}</p>
+            </div>
+
+            <div class="result">
+                <strong>Lowercase Text:</strong>
+                <p>${lowercaseText}</p>
+            </div>
+
+            <div class="result">
+                Text starts with "Hello":
+                <strong>${startsWithHello}</strong>
+            </div>
+
+            <div class="result">
+                Text contains "Python":
+                <strong>${containsPython}</strong>
+            </div>
+
+            <div class="result">
+                Number of occurrences of "Python":
+                <strong>${pythonOccurrences}</strong>
+            </div>
+        </div>
+    `;
+}
+
+</script>
+
+</body>
+</html>
