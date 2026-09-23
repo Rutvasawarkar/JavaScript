@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Theme Storage</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 60px;
+            background-color: white;
+            color: black;
+            transition: 0.3s;
+        }
+
+        .box {
+            width: 400px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* LocalStorage themes */
+        .dark {
+            background-color: #222;
+            color: white;
+        }
+
+        .light {
+            background-color: white;
+            color: black;
+        }
+
+        /* SessionStorage themes */
+        .blue {
+            background-color: #dbeafe;
+            color: #1e3a8a;
+        }
+
+        .green {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h2>Theme Settings</h2>
+
+        <h3>Local Storage Theme</h3>
+
+        <button onclick="setLocalTheme('light')">
+            Light
+        </button>
+
+        <button onclick="setLocalTheme('dark')">
+            Dark
+        </button>
+
+
+        <h3>Session Storage Theme</h3>
+
+        <button onclick="setSessionTheme('blue')">
+            Blue
+        </button>
+
+        <button onclick="setSessionTheme('green')">
+            Green
+        </button>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <script>
+
+        // LOCAL STORAGE
+        // Save Light/Dark theme
+        function setLocalTheme(theme) {
+
+            localStorage.setItem("localTheme", theme);
+
+            applyTheme(theme);
+
+            document.getElementById("message").textContent =
+                "Local theme saved: " + theme;
+        }
+
+
+        // SESSION STORAGE
+        // Save Blue/Green theme
+        function setSessionTheme(theme) {
+
+            sessionStorage.setItem("sessionTheme", theme);
+
+            applyTheme(theme);
+
+            document.getElementById("message").textContent =
+                "Session theme saved: " + theme;
+        }
+
+
+        // Apply theme
+        function applyTheme(theme) {
+
+            document.body.classList.remove(
+                "light",
+                "dark",
+                "blue",
+                "green"
+            );
+
+            document.body.classList.add(theme);
+        }
+
+
+        // Load saved themes
+        window.onload = function() {
+
+            // Get theme from localStorage
+            let localTheme = localStorage.getItem("localTheme");
+
+            // Get theme from sessionStorage
+            let sessionTheme = sessionStorage.getItem("sessionTheme");
+
+
+            // Session theme gets priority
+            if (sessionTheme) {
+                applyTheme(sessionTheme);
+            }
+
+            else if (localTheme) {
+                applyTheme(localTheme);
+            }
+        };
+
+    </script>
+
+</body>
+</html>
